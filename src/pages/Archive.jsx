@@ -3,7 +3,8 @@ import TaskCard from '../components/tasks/TaskCard';
 
 const Archive = () => {
   const { tasks } = useSelector((state) => state.tasksSlice);
-
+  const user=useSelector(state=>state.userSlice)
+  console.log(user);
   const archiveTasks = tasks.filter((item) => item.status == 'archive');
 
   return (

@@ -1,14 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/image/login.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThuncData, loginUser } from '../redux/features/user/userSlice';
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-
+const userData=useSelector(state=>state.userSlice)
+const dispatch=useDispatch();
   const onSubmit = ({ email, password }) => {
     // Email Password Login
-
+dispatch(loginUser({email,password}))
     console.log(email, password);
+    
   };
 
   const handleGoogleLogin = () => {

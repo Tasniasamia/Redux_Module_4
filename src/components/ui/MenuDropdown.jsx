@@ -1,7 +1,17 @@
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { auth } from '../../../Firebase/Firebase';
+import { signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { loggedOut } from '../../redux/features/user/userSlice';
 
 export default function MenuDropdown({ children }) {
+  const dispatch=useDispatch()
+  const logOut=()=>{
+    signOut(auth)
+    dispatch(loggedOut())
+  }
+ 
   return (
     <Menu as="div" className="relative inline-block text-left bg-white z-[999]">
       <div>
@@ -46,7 +56,7 @@ export default function MenuDropdown({ children }) {
                   className={`${
                     active ? 'bg-primary text-white' : 'text-gray-900'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
+               onClick={logOut} >
                   Logout
                 </button>
               )}
