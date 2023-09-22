@@ -2,6 +2,8 @@ import { useForm } from 'react-hook-form';
 import Modal from '../ui/Modal';
 import { useDispatch } from 'react-redux';
 import { addTask } from '../../redux/features/tasks/tasksSlice';
+import { useSetPostMutation } from '../../redux/features/baseApi/api';
+import {  Toaster, toast } from 'react-hot-toast';
 
 const AddTaskModal = ({ isOpen, setIsOpen }) => {
   const { register, handleSubmit, reset } = useForm();
@@ -11,14 +13,21 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
     reset();
     setIsOpen(false);
   };
+  const [setPostData,{data:postData,isError,error}]=useSetPostMutation()
+  console.log(postData);
+if(isError){
+  toast.error(error);
+}
 
   const onSubmit = (data) => {
     dispatch(addTask(data));
+    setPostData({status:"pending",...data})
     onCancel();
   };
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Programming Hero">
+      <Toaster/>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col mb-5">
           <label htmlFor="title" className="mb-2">

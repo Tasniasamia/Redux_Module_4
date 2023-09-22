@@ -4,6 +4,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThuncData } from '../redux/features/user/userSlice';
+import { Toaster, toast } from 'react-hot-toast';
 
 const Signup = () => {
   const { handleSubmit, register, control } = useForm();
@@ -33,13 +34,18 @@ const dispatch=useDispatch();
     console.log(name, email, password);
     dispatch(ThuncData({name,email,password}))
   };
-
+const {isLoading,isError,error} =useSelector((state)=>state.userSlice)
   const handleGoogleLogin = () => {
     // Google Login
   };
-
+useEffect(()=>{
+  if(isError){
+    toast.error(error)
+  }
+},[isError,error])
   return (
     <div className="flex max-w-7xl mx-auto h-screen items-center">
+      <Toaster/>
       <div className="w-1/2">
         <img src={loginImage} className="h-full w-full" alt="" />
       </div>

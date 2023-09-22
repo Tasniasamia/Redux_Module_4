@@ -4,10 +4,12 @@ import {
   removeTask,
   updateStatus,
 } from '../../redux/features/tasks/tasksSlice';
+import { useUpdatePostMutation } from '../../redux/features/baseApi/api';
 
 const TaskCard = ({ task }) => {
+  const[updatePost,{data:updateData}]=useUpdatePostMutation();
+  console.log(updateData);
   const dispatch = useDispatch();
-
   let updatedStatus;
 
   if (task.status === 'pending') {
@@ -38,7 +40,7 @@ const TaskCard = ({ task }) => {
           </button>
           <button
             onClick={() =>
-              dispatch(updateStatus({ id: task.id, status: updatedStatus }))
+              updatePost({id:task._id,data:{status:updatedStatus}})
             }
             title="Update Status"
           >

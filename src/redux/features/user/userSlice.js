@@ -53,10 +53,7 @@ const userSlice = createSlice({
     loggedOut:(state)=>{
       state.name = "";
       state.email = "";
-      state.password = "";
-      state.isLoading = false;
-      state.isError = false;
-      state.error = '';
+    
     }
   },
   extraReducers: (builder) => {

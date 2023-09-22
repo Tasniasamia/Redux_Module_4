@@ -13,9 +13,8 @@ const PrivateRoute = ({ children }) => {
 onAuthStateChanged(auth, (user) => {
     console.log("onAuthStateChanged",user);
        dispatch(setLoading(false))
-      dispatch(setUser({name:user.displayName ,email:user.email}))
+      dispatch(setUser({name:user?.displayName,email:user?.email}))
       
-      const uid = user.uid;
      
      
     });
@@ -23,7 +22,7 @@ onAuthStateChanged(auth, (user) => {
   // const isLoading = false;
   // const email = 'test@gmail.com';
   const user=useSelector(state=>state.userSlice)
-  console.log("UserSlice",user);
+  // console.log("UserSlice",user);
 
   if (user.isLoading) {
     return <Loading />;

@@ -5,14 +5,16 @@ import AddTaskModal from '../components/tasks/AddTaskModal';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MenuDropdown from '../components/ui/MenuDropdown';
+import { useGetPostQuery } from '../redux/features/baseApi/api';
 
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { tasks } = useSelector((state) => state.tasksSlice);
-
-  const pendingTasks = tasks?.filter((item) => item.status == 'pending');
-  const runningTasks = tasks?.filter((item) => item.status == 'running');
-  const doneTasks = tasks?.filter((item) => item.status == 'done');
+  const {data}=useGetPostQuery();
+  console.log(data)
+  const pendingTasks = data?.filter((item) => item.status == 'pending');
+  const runningTasks = data?.filter((item) => item.status == 'running');
+  const doneTasks = data?.filter((item) => item.status == 'done');
 
   return (
     <>
@@ -53,12 +55,12 @@ const Tasks = () => {
               <div className="flex sticky top-0  justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>Up Next</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                  {pendingTasks.length}
+                  {pendingTasks?.length}
                 </p>
               </div>
               <div className="space-y-3">
-                {pendingTasks.map((item) => (
-                  <TaskCard key={item.id} task={item} />
+                {pendingTasks?.map((item) => (
+                  <TaskCard key={item._id} task={item} />
                 ))}
               </div>
             </div>
@@ -66,12 +68,12 @@ const Tasks = () => {
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>In Progress</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                  {runningTasks.length}
+                  {runningTasks?.length}
                 </p>
               </div>
               <div className="space-y-3">
-                {runningTasks.map((item) => (
-                  <TaskCard key={item.id} task={item} />
+                {runningTasks?.map((item) => (
+                  <TaskCard key={item._id} task={item} />
                 ))}
               </div>
             </div>
@@ -79,12 +81,12 @@ const Tasks = () => {
               <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
                 <h1>Up Next</h1>
                 <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                  {doneTasks.length}
+                  {doneTasks?.length}
                 </p>
               </div>
               <div className="space-y-3">
-                {doneTasks.map((item) => (
-                  <TaskCard key={item.id} task={item} />
+                {doneTasks?.map((item) => (
+                  <TaskCard key={item._id} task={item} />
                 ))}
               </div>
             </div>
